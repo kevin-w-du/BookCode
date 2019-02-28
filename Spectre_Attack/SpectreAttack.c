@@ -1,13 +1,12 @@
 #include <emmintrin.h>
 #include <x86intrin.h>
-#include <stdlib.h>
 #include <stdio.h>
 #include <stdint.h>
 
 unsigned int buffer_size = 10;
 uint8_t buffer[10] = {0,1,2,3,4,5,6,7,8,9}; 
 uint8_t temp = 0;
-char *secret = "Some Secret Value";   
+char *secret = "A Secret Value";   
 uint8_t array[256*4096];
 
 #define CACHE_HIT_THRESHOLD (80)
