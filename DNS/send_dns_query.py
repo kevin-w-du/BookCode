@@ -1,11 +1,11 @@
 #!/usr/bin/python3
 from scapy.all import *
 
-IPpkt = IP(dst='8.8.8.8')
-UDPpkt = UDP(sport=9000, dport=53)
+IPpkt  = IP(dst='8.8.8.8')
+UDPpkt = UDP(dport=53)
 
-Qdsec  = DNSQR(qname='www.example.com') 
-DNSpkt = DNS(id=100, qr=0, qdcount=1, qd=Qdsec)
+Qdsec    = DNSQR(qname='www.syracuse.edu') 
+DNSpkt   = DNS(id=100, qr=0, qdcount=1, qd=Qdsec)
 Querypkt = IPpkt/UDPpkt/DNSpkt
-p= sr1(Querypkt)
-ls(p)
+reply = sr1(Querypkt)
+ls(reply[DNS])
