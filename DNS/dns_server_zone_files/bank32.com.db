@@ -1,0 +1,17 @@
+$TTL 3D ; default expiration time of all resource records without
+        ;   their own TTL
+@       IN      SOA     ns.bank32.com. admin.bank32.com. (
+        1               ; Serial
+        8H              ; Refresh
+        2H              ; Retry
+        4W              ; Expire
+        1D )            ; Minimum
+
+@       IN       NS   ns.bank32.com.       ;Nameserver
+@       IN       MX   10 mail.bank32.com.  ;Primary Mail Exchanger
+
+www     IN        A   192.168.0.101   ;Address of www.bank32.com
+mail    IN        A   192.168.0.102   ;Address of mail.bank32.com
+ns      IN        A   192.168.0.10    ;Address of ns.bank32.com
+*.bank32.com. IN  A   192.168.0.100   ;Address for other names
+

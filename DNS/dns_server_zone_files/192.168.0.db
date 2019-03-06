@@ -1,0 +1,13 @@
+$TTL 3D
+@       IN      SOA     ns.bank32.com. admin.bank32.com. (
+                1
+                8H
+                2H
+                4W
+                1D)
+@       IN      NS      ns.bank32.com.
+
+101     IN      PTR     www.bank32.com.
+102     IN      PTR     mail.bank32.com.
+10      IN      PTR     ns.bank32.com.
+
