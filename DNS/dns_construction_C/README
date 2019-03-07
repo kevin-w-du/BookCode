@@ -1,0 +1,18 @@
+
+In Kaminsky attack, using Scapy to spoof packets is too slow, and 
+the chance of success is almost zero. We can write a C program 
+to do the spoofing, but to many students, this is quite hard. 
+We can simply the task by leveraging both Scapy and C.
+
+generate_dns_query.py:
+generate_dns_reply.py:
+-----------------------
+   These Python programs generate a spoofed DNS packet using Scapy.
+   The packet will be salved to a file 'ip.bin'
+
+send_premade_dns.c
+-----------------------
+   This C program load the DNS packet from the file 'ip.bin', makes
+   changes to some of the fields of the packet, and then use the raw
+   socket to send the spoofed packet out.
+   
