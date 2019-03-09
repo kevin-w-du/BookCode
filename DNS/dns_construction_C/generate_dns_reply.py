@@ -1,10 +1,10 @@
 #!/usr/bin/python3
 from scapy.all import *
 
-IPpkt = IP(dst='10.0.2.69', src='10.2.3.4')
-UDPpkt = UDP(dport=33333, sport=53)
+IPpkt = IP(dst='10.0.2.69', src='199.43.135.53', chksum=0)
+UDPpkt = UDP(dport=33333, sport=53, chksum=0,)
 
-targetName = 'aaaaa.example.com'
+targetName = 'twysw.example.com'
 targetDomain = 'example.com'
 
 Qdsec  = DNSQR(qname=targetName)
