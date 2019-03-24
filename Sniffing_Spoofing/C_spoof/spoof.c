@@ -1,6 +1,14 @@
+#include <unistd.h>
+#include <stdio.h>
+#include <string.h>
+#include <sys/socket.h>
+#include <netinet/ip.h>
+#include <arpa/inet.h>
+
+#include "myheader.h"
+
 /*************************************************************
   Given an IP packet, send it out using a raw socket.
-  The ipheader structure is already defined in Listing (*@\ref{snoof:list:got_packet}@*)
 **************************************************************/
 void send_raw_ip_packet(struct ipheader* ip)
 {
