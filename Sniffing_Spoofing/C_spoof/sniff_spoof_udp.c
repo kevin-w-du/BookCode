@@ -1,7 +1,14 @@
-/* 
- This file is not a complete C program; it only contains one function. 
- It will not pass the compilation. Readers are supposed to complete it.
-*/ 
+#include <unistd.h>
+#include <stdio.h>
+#include <string.h>
+#include <sys/socket.h>
+#include <netinet/ip.h>
+#include <arpa/inet.h>
+#include <pcap.h>
+
+#include "myheader.h"
+
+void send_raw_ip_packet(struct ipheader* ip);
 
 void spoof_reply(struct ipheader* ip)
 {
@@ -41,5 +48,40 @@ void spoof_reply(struct ipheader* ip)
 
     // Step 5: Send out the spoofed IP packet
     send_raw_ip_packet(newip);
+}
+
+void got_packet(u_char *args, const struct pcap_pkthdr *header,
+        const u_char *packet)
+{
+  printf("Got a packet\n");
+  struct ethheader *eth = (struct ethheader *)packet;
+
+  if (ntohs(eth->ether_type) == 0x0800) { // 0x0800 is IP type
+    struct ipheader * ip = (struct ipheader *)
+                           (packet + sizeof(struct ethheader));
+    spoof_reply(ip);
+  }
+}
+
+int main()
+{
+  pcap_t *handle;
+  char errbuf[PCAP_ERRBUF_SIZE];
+  struct bpf_program fp;
+  char filter_exp[] = "ip proto udp";
+  bpf_u_int32 net;
+
+  // Step 1: Open live pcap session on NIC with name enp0s3
+  handle = pcap_open_live("enp0s3", BUFSIZ, 1, 1000, errbuf); 
+
+  // Step 2: Compile filter_exp into BPF psuedo-code
+  pcap_compile(handle, &fp, filter_exp, 0, net);              
+  pcap_setfilter(handle, &fp);                                
+
+  // Step 3: Capture packets
+  pcap_loop(handle, -1, got_packet, NULL);                    
+
+  pcap_close(handle);   //Close the handle
+  return 0;
 }
 
