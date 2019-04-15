@@ -1,1 +1,0 @@
-cmd_/home/seed/git/BookCode/Firewall/kernel_module/kMod.ko := ld -r -m elf_i386 -T ./scripts/module-common.lds --build-id  -o /home/seed/git/BookCode/Firewall/kernel_module/kMod.ko /home/seed/git/BookCode/Firewall/kernel_module/kMod.o /home/seed/git/BookCode/Firewall/kernel_module/kMod.mod.o
