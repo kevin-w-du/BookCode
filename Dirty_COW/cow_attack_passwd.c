@@ -5,6 +5,8 @@
 #include <string.h>
 
 void *map;
+void *writeThread(void *arg);
+void *madviseThread(void *arg);
 
 int main(int argc, char *argv[])
 {
