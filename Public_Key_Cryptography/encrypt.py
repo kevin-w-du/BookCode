@@ -8,7 +8,6 @@ message = b'A secret message!\n'
 key = RSA.importKey(open('public.pem').read()) 
 cipher = PKCS1_OAEP.new(key)                  
 ciphertext = cipher.encrypt(message)
-f = open('ciphertext.bin','wb')
-f.write(ciphertext)
-f.close()
+with open('ciphertext.bin','wb') as f:
+  f.write(ciphertext)
 
