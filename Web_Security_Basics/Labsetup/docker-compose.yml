@@ -1,0 +1,22 @@
+version: "3"
+
+services:
+    apache-server:
+        build: ./image_apache_server
+        image: seed-image-apache-server
+        container_name: apache-10.9.0.5
+        volumes:
+          - ./image_apache_server/bank32:/var/www/bank32
+          - ./image_apache_server/bank99:/var/www/bank99
+        tty: true
+        networks:
+            net-10.9.0.0:
+                ipv4_address: 10.9.0.5
+
+networks:
+    net-10.9.0.0:
+        name: net-10.9.0.0
+        ipam:
+            config:
+                - subnet: 10.9.0.0/24
+

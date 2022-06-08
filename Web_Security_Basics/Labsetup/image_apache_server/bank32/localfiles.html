@@ -1,0 +1,27 @@
+<html>
+<body>
+
+<p id="demo"></p>
+<button onclick="showfile()">Show File</button>
+
+<input type="file" id="file-selector">
+
+<script>
+function showfile() {
+   var files = document.getElementById('file-selector').files;
+   if (!files.length) {
+      alert('Please select a file!');
+      return;
+    }
+    var reader = new FileReader();
+    reader.onloadend = function(evt) {
+      if (evt.target.readyState == FileReader.DONE) { 
+         content = evt.target.result;
+         document.getElementById('demo').textContent = content;
+      }
+    };
+    reader.readAsBinaryString(files[0]);
+}
+</script>
+</body>
+<html>
