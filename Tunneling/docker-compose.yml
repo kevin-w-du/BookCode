@@ -1,0 +1,133 @@
+version: "3"
+
+services:
+    Home:
+        build: ./Hosts
+        image: seed-image-ubuntu-hosts
+        container_name: home-10.9.0.5
+        tty: true
+        cap_add:
+                - ALL
+        devices:
+                - "/dev/net/tun:/dev/net/tun"
+        sysctls:
+                - net.ipv4.ip_forward=1
+
+        networks:
+            net-10.9.0.0:
+                ipv4_address: 10.9.0.5
+        command: bash -c "
+                      ip route add 192.168.60.0/24 via 10.9.0.11 &&
+                      /etc/init.d/openbsd-inetd start  &&
+                      service ssh start  &&
+                      tail -f /dev/null
+                 "
+
+    Home2:
+        image: seed-image-ubuntu-hosts
+        container_name: home2-10.9.0.6
+        tty: true
+        cap_add:
+                - ALL
+        networks:
+            net-10.9.0.0:
+                ipv4_address: 10.9.0.6
+        command: bash -c "
+                      ip route add 192.168.60.0/24 via 10.9.0.11 &&
+                      /etc/init.d/openbsd-inetd start  &&
+                      tail -f /dev/null
+                 "
+
+    Apollo:
+        image: seed-image-ubuntu-hosts
+        container_name: apollo-192.168.60.5
+        tty: true
+        cap_add:
+                - ALL
+        devices:
+                - "/dev/net/tun:/dev/net/tun"
+        sysctls:
+                - net.ipv4.ip_forward=1
+
+        networks:
+            net-192.168.60.0:
+                ipv4_address: 192.168.60.5
+        command: bash -c "
+                      ip route del default  &&
+                      ip route add default via 192.168.60.11  &&
+                      /etc/init.d/openbsd-inetd start  &&
+                      service ssh start  &&
+                      tail -f /dev/null
+                 "
+                  
+    Work:
+        image: seed-image-ubuntu-hosts
+        container_name: work-192.168.60.6
+        tty: true
+        cap_add:
+                - ALL
+        networks:
+            net-192.168.60.0:
+                ipv4_address: 192.168.60.6
+        command: bash -c "
+                      ip route del default  &&
+                      ip route add default via 192.168.60.11  &&
+                      /etc/init.d/openbsd-inetd start  &&
+                      tail -f /dev/null
+                 "
+
+    Work2:
+        image: seed-image-ubuntu-hosts
+        container_name: work2-192.168.60.7
+        tty: true
+        cap_add:
+                - ALL
+        networks:
+            net-192.168.60.0:
+                ipv4_address: 192.168.60.7
+        command: bash -c "
+                      ip route del default  &&
+                      ip route add default via 192.168.60.11  &&
+                      /etc/init.d/openbsd-inetd start  &&
+                      tail -f /dev/null
+                 "
+
+    Router:
+        image: handsonsecurity/seed-ubuntu:large
+        container_name: router-firewall
+        tty: true
+        cap_add:
+                - ALL
+        sysctls:
+                - net.ipv4.ip_forward=1
+
+        networks:
+            net-10.9.0.0:
+                ipv4_address: 10.9.0.11
+            net-192.168.60.0:
+                ipv4_address: 192.168.60.11
+        command: bash -c "
+                      ip route del default  &&
+                      ip route add default via 10.9.0.1 &&
+                      iptables -t nat -A POSTROUTING ! -d 10.9.0.0/24 -j MASQUERADE -o eth0 &&
+                      iptables -A FORWARD -i eth0 -p tcp -m conntrack --ctstate ESTABLISHED,RELATED -j ACCEPT && 
+                      iptables -A FORWARD -i eth0 -p tcp --dport 22 -j ACCEPT && 
+                      iptables -A FORWARD -i eth0 -p tcp -j DROP && 
+                      iptables -A FORWARD -i eth1 -d 93.184.216.0/24 -j DROP &&
+                      /etc/init.d/openbsd-inetd start  &&
+                      tail -f /dev/null
+                 "
+
+networks:
+    net-192.168.60.0:
+        name: net-192.168.60.0
+        ipam:
+            config:
+                - subnet: 192.168.60.0/24
+
+    net-10.9.0.0:
+        name: net-10.9.0.0
+        ipam:
+            config:
+                - subnet: 10.9.0.0/24
+
