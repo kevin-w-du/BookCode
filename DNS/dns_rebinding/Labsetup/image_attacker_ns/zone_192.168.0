@@ -1,0 +1,11 @@
+$TTL 3D
+@       IN      SOA     ns.attacker32.com. admin.attacker32.com. (
+                1
+                8H
+                2H
+                4W
+                1D)
+@       IN      NS      ns.attacker32.com.
+
+101     IN      PTR     www.attacker32.com.
+102     IN      PTR     xyz.attacker32.com.
