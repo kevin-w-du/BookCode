@@ -7,7 +7,7 @@
 #include <time.h>
 
 #define MAX_FILE_SIZE   2000
-#define TARGET_IP "10.0.2.69" 
+#define TARGET_IP "10.9.0.5" 
 
 int send_packet_raw (int sock, char *ip, int n);
 

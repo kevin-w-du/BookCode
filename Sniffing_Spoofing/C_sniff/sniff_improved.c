@@ -1,6 +1,8 @@
-#include <pcap.h>
+#include <stdlib.h>
 #include <stdio.h>
+#include <pcap.h>
 #include <arpa/inet.h>
+
 
 /* Ethernet header */
 struct ethheader {
@@ -60,7 +62,7 @@ int main()
   pcap_t *handle;
   char errbuf[PCAP_ERRBUF_SIZE];
   struct bpf_program fp;
-  char filter_exp[] = "ip proto icmp";
+  char filter_exp[] = "icmp";
   bpf_u_int32 net;
 
   // Step 1: Open live pcap session on NIC with name enp0s3
@@ -68,7 +70,10 @@ int main()
 
   // Step 2: Compile filter_exp into BPF psuedo-code
   pcap_compile(handle, &fp, filter_exp, 0, net);
-  pcap_setfilter(handle, &fp);
+  if (pcap_setfilter(handle, &fp) !=0) {
+      pcap_perror(handle, "Error:");
+      exit(EXIT_FAILURE);
+  }
 
   // Step 3: Capture packets
   pcap_loop(handle, -1, got_packet, NULL);

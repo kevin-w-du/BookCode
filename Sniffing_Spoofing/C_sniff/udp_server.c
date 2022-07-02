@@ -11,10 +11,8 @@ void main()
     int clientlen;
     char buf[1500];
 
-    // Step (*@\ding{192}@*)
     int sock = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
 
-    // Step (*@\ding{193}@*)
     memset((char *) &server, 0, sizeof(server));
     server.sin_family = AF_INET;
     server.sin_addr.s_addr = htonl(INADDR_ANY);
@@ -23,7 +21,6 @@ void main()
     if (bind(sock, (struct sockaddr *) &server, sizeof(server)) < 0)
         perror("ERROR on binding");
 
-    // Step (*@\ding{194}@*)
     while (1) {
         bzero(buf, 1500);
         recvfrom(sock, buf, 1500-1, 0,
