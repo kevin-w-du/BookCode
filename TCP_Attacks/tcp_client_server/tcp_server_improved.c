@@ -20,28 +20,28 @@ int main()
   my_addr.sin_port = htons(9090);
   bind(sockfd, (struct sockaddr *)&my_addr, sizeof(struct sockaddr_in));
 
-  // Listen for connections
+  // Step 3: Listen for connections
   listen(sockfd, 5);
 
   int client_len = sizeof(client_addr);
   while (1) {
     newsockfd = accept(sockfd, (struct sockaddr *)&client_addr, &client_len);
-
-    if (fork() == 0) { // The child process           
-       close (sockfd);
-
-       // Read data.
+  
+    if (fork() == 0) { // The child process      
+       close (sockfd); 
+  
+       // Read data  
        memset(buffer, 0, sizeof(buffer));
        int len = read(newsockfd, buffer, 100);
        printf("Received %d bytes.\n%s\n", len, buffer);
-
+  
        close (newsockfd);
        return 0;
-    } else {  // The parent process                    
-       close (newsockfd);
+    } else {  // The parent process             
+       close (newsockfd); 
     }
   }
 
-  return 0;
+
 }
 
