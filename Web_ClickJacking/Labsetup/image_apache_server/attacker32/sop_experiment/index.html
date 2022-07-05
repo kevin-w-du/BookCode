@@ -1,0 +1,39 @@
+<html >
+<head>
+<title>Iframe Experiment</title>
+<link rel="stylesheet" href="mystyle.css">
+</head>
+
+<body>
+<h2>Iframe Experiment</h2>
+<h3>Origin: www.attacker32.com</h3>
+<p id="secret">Secret: 8379785 (attacker32)</p>
+<button onclick=getChild("A")>Access child A</button>  
+      &nbsp;&nbsp;A: <span id="childA"></span><br>
+<button onclick=getChild("B")>Access child B</button>  
+      &nbsp;&nbsp;B:  <span id="childB"></span><br>
+<button onclick=getChild("C")>Access child C </button> 
+      &nbsp;&nbsp;C: <span id="childC"></span><br>
+<p/>
+
+
+<iframe id="A" src="http://www.attacker32.com/sop_experiment/iframe1.html"></iframe>
+<iframe id="B" src="http://www.attacker32.com/sop_experiment/iframe2.html"></iframe>
+<iframe id="C" src="http://www.bank32.com/sop_experiment/iframe1.html"></iframe>
+
+<script>
+  function getChild(parameter){
+    try {
+      child = document.getElementById(parameter);
+      data = child.contentDocument.getElementById("secret");
+      document.getElementById("child"+parameter).innerHTML = data.innerHTML;
+    } catch(e) {
+      document.getElementById("child"+parameter).innerHTML = 
+	    "<span class='denied'>Access denied!</span>";
+      alert(e);
+    }
+  }
+</script>
+</body>
+</html>
+

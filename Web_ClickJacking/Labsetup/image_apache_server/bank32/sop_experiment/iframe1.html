@@ -1,0 +1,44 @@
+<html>
+<head>
+   <link rel="stylesheet" href="mystyle.css">
+</head>
+<body>
+  <h3>Origin: www.bank32.com</h3>
+  <p id="secret">Secret: 3333333 (bank32)</p>
+  <button onclick=getParent()>Access Parent P</button><br>
+  <button onclick=getSibling("A")>Access Sibling A</button><br>
+  <button onclick=getSibling("B")>Access Sibling B</button>
+  <p>
+    P: <span id="parent"></span><br>
+    B: <span id="siblingA"></span><br>
+    C: <span id="siblingB"></span>
+  </p>
+
+  <script>
+    function getParent(){ 
+      try {
+        data = parent.document.getElementById("secret");
+        document.getElementById("parent").innerHTML = data.innerHTML;
+      } catch(e) {
+        document.getElementById("parent").innerHTML = 
+                    "<span class='denied'>Access denied!</span>";
+        alert(e);
+      }
+    }
+    function getSibling(parameter){
+      try {
+	siblingframe = parent.document.getElementById(parameter);
+        data = siblingframe.contentDocument.getElementById("secret");
+        document.getElementById("sibling"+parameter).innerHTML = data.innerHTML;
+      } catch(e) {
+	document.getElementById("sibling"+parameter).innerHTML = 
+                    "<span class='denied'>Access denied!</span>";
+
+        alert(e); 
+      }
+    }
+  </script>
+
+
+</body>
+</html>

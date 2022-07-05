@@ -1,0 +1,29 @@
+<html>
+<head>
+   <link rel="stylesheet" href="mystyle.css">
+</head>
+<body>
+  <h3>Origin: www.bank32.com</h3>
+  <p id="secret">Secret: 3333333 (bank32)</p>
+  <button onclick=getParent()>Access Parent P</button><br>
+  <p>
+    P: <span id="parent"></span><br>
+  </p>
+
+  <script>
+    function getParent(){ 
+      try {
+	alert(document.cookie);
+        data = parent.document.getElementById("secret");
+        document.getElementById("parent").innerHTML = data.innerHTML;
+      } catch(e) {
+        document.getElementById("parent").innerHTML = 
+                    "<span class='denied'>Access denied!</span>";
+        alert(e);
+      }
+    }
+  </script>
+
+
+</body>
+</html>

@@ -1,0 +1,48 @@
+<html >
+<head>
+<title>Iframe Experiment</title>
+<link rel="stylesheet" href="mystyle.css">
+</head>
+
+<body>
+<h2>Iframe Experiment</h2>
+<h3>Origin: www.bank32.com</h3>
+<p id="secret">Secret: 8379785 (attacker32)</p>
+<button onclick=getChild("A")>Access child A</button>  
+      &nbsp;&nbsp;A: <span id="childA"></span><br>
+<button onclick=addFrame()>Add iframe</button>  
+
+<script>
+    document.cookie="abc=xyz";
+</script>
+
+<p/>
+
+<iframe id="A"  sandbox="allow-modals allow-same-origin"
+     src="http://www.bank32.com/sandboxing/iframe1.html"></iframe>
+
+<script>
+  function getChild(parameter){
+    try {
+      child = document.getElementById(parameter);
+      data = child.contentDocument.getElementById("secret");
+      document.getElementById("child"+parameter).innerHTML = data.innerHTML;
+    } catch(e) {
+      document.getElementById("child"+parameter).innerHTML = 
+	    "<span class='denied'>Access denied!</span>";
+      alert(e);
+    }
+  }
+  function addFrame() {
+      let content = "<html><body>";
+      content += "<script>alert('hello')</" +"script>";
+      content += "<h2>Hello</h2></body></html>";
+      const iframe = document.createElement("iframe");
+      iframe.srcdoc = content;
+      iframe.sandbox = "allow-modals";
+      document.body.appendChild(iframe);
+  }
+</script>
+</body>
+</html>
+

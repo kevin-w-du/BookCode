@@ -1,0 +1,51 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+<title>ClickJacking Attack</title>
+<style type="text/css">
+  body { background-color: lightblue; 
+         margin-top:    50px; margin-bottom: 20px; 
+	 margin-right:   0px; margin-left:   80px;
+         font-family: Arial, Helvetica, sans-serif; 
+  }
+</style>
+</head>
+
+<body>
+<h1>Iframe Experiments</h1>
+
+<h3>Clickjacking Attacks</h3>
+<ul>
+  <li><a href="attack/clickjacking1.html">Attack 1 (transparent iframe)</a> (Likejacking)</li>
+  <li><a href="attack/clickjacking2.html">Attack 2 (transparent iframe)</a> (Adding friends)</li>
+  <li><a href="attack/clickjacking3.html">Attack 3 (transparent iframe)</a> (Deleting friends)</li>
+  <li><a href="attack/clickjacking4.html">Attack 4 (small-size iframe)</a> (Likejacking)</li>
+  <li><a href="attack/clickjacking5.html">Attack 5 (small-size iframe)</a> (Hijacking login)</li>
+</ul>
+
+<h3>Defense Against Clickjacking Attacks</h3>
+<ul>
+  <li><a href="defense/xframe-experiment.html">Defense 1</a> 
+                         (X-Frame-Options, from attacker32.com)</li>
+  <li><a href="http://www.bank32.com/xframe-experiment.html">Defense 2</a> 
+                         (X-Frame-Options, from bank32.com)</li>
+  <li><a href="defense/csp-experiment.html">Defense 3</a> 
+                         (CSP, from attacker32.com)</li>
+  <li><a href="http://www.bank32.com/csp-experiment.html">Defense 4</a> 
+                         (CSP, from bank32.com)</li> 
+</ul>
+
+<h3>Same Origin Policy Experiments</h3>
+<ul>
+  <li><a href="./sop_experiment/">SOP Experiment</a></li>
+</ul>
+
+<h3>Sandboxing Experiments</h3>
+<ul>
+  <li><a href="http://www.bank32.com/sandboxing/">Sandboxing Experiment</a></li>
+</ul>
+
+
+</body>
+</html>
+
