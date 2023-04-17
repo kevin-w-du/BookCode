@@ -1,0 +1,20 @@
+[ req ]
+prompt             = no
+distinguished_name = req_distinguished_name
+req_extensions     = req_ext
+
+[ req_distinguished_name ]
+C  = US
+ST = New York
+L  = Syracuse
+O  = XYZ LTD.
+CN = www.bank32.com
+
+[ req_ext ]
+subjectAltName = @alt_names
+
+[alt_names]
+DNS.1   = www.bank32.com
+DNS.2   = www.example.com
+DNS.3   = *.bank32.com
+
